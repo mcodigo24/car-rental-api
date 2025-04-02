@@ -18,12 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api\Controllers\" />
     <Folder Include="Application\Dtos\" />
     <Folder Include="Application\Services\IServices\" />
-    <Folder Include="Domain\Repositories\" />
     <Folder Include="Infrastructure\Middlewares\" />
-    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>
