@@ -20,17 +20,19 @@ namespace car_rental_api.Infrastructure.Persistence.Database
             modelBuilder.Entity<Car>()
                 .HasMany(c => c.Services)
                 .WithOne(s => s.Car)
-                .HasForeignKey(s => s.CarId);
-            
+                .HasForeignKey(s => s.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Car>()
+                .HasMany(c => c.Rentals)
+                .WithOne(r => r.Car)
+                .HasForeignKey(r => r.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Rental>()
                 .HasOne(r => r.Customer)
-                .WithMany()
+                .WithMany(c => c.Rentals)
                 .HasForeignKey(r => r.CustomerId);
-            
-            modelBuilder.Entity<Rental>()
-                .HasOne(r => r.Car)
-                .WithMany()
-                .HasForeignKey(r => r.CarId);
 
             modelBuilder.Entity<Rental>()
                 .HasOne(r => r.RentalStatus)
