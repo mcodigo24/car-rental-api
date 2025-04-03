@@ -20,5 +20,9 @@ namespace car_rental_api.Domain.Entities
 
         [Required]
         public DateTime EndDate { get; set; }
+
+        [Required]
+        public int RentalStatusId { get; set; }
+        public RentalStatus RentalStatus { get; set; } = null!;
     }
 }

@@ -12,5 +12,8 @@ namespace car_rental_api.Domain.Entities
 
         [MaxLength(200)]
         public string Address { get; set; }
+
+        [Required]
+        public int IdNumber { get; set; }
     }
 }
