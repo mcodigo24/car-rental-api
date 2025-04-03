@@ -1,3 +1,4 @@
+using car_rental_api.Infrastructure.Middlewares;
 using car_rental_api.Infrastructure.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
