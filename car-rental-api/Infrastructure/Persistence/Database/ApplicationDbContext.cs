@@ -13,6 +13,7 @@ namespace car_rental_api.Infrastructure.Persistence.Database
         public DbSet<Car> Cars { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<RentalStatus> RentalStatus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
@@ -30,6 +31,11 @@ namespace car_rental_api.Infrastructure.Persistence.Database
                 .HasOne(r => r.Car)
                 .WithMany()
                 .HasForeignKey(r => r.CarId);
+
+            modelBuilder.Entity<Rental>()
+                .HasOne(r => r.RentalStatus)
+                .WithMany()
+                .HasForeignKey(r => r.RentalStatusId);
         }
     }
 }
