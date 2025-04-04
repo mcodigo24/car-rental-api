@@ -4,7 +4,9 @@ namespace car_rental_api.Domain.Repositories
 {
     public interface ICustomersRepository
     {
-        Task AddAsync(Customer customer);
-        Task<bool> ExistCustomer(string fullName);
+        Task<int> AddAsync(Customer customer);
+        Task<bool> ExistsByFullNameAsync(string fullName);
+        Task<bool> ExistsByIdAsync(int id);
+        Task<Customer?> GetByFullNameAsync(string fullName);
     }
 }

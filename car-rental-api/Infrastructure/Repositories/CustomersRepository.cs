@@ -14,15 +14,27 @@ namespace car_rental_api.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task AddAsync(Customer customer)
+        public async Task<int> AddAsync(Customer customer)
         {
             _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();            
+            await _context.SaveChangesAsync();
+
+            return customer.Id;
         }
 
-        public async Task<bool> ExistCustomer(string fullName)
+        public async Task<bool> ExistsByFullNameAsync(string fullName)
         {
-            return await _context.Customers.AnyAsync(c => c.FullName.Equals(fullName, StringComparison.CurrentCultureIgnoreCase));
+            return await _context.Customers.AnyAsync(c => c.FullName.ToUpper() == fullName.ToUpper());
+        }
+
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            return await _context.Customers.AnyAsync(c => c.Id == id);
+        }
+
+        public async Task<Customer?> GetByFullNameAsync(string fullName)
+        {
+            return await _context.Customers.FirstOrDefaultAsync(c => c.FullName.ToUpper() == fullName.ToUpper());
         }
     }
 }

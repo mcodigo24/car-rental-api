@@ -1,5 +1,9 @@
+using car_rental_api.Application.Interfaces;
+using car_rental_api.Application.Services;
+using car_rental_api.Domain.Repositories;
 using car_rental_api.Infrastructure.Middlewares;
 using car_rental_api.Infrastructure.Persistence.Database;
+using car_rental_api.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -16,6 +20,15 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Repositories
+builder.Services.AddScoped<ICarsRepository, CarsRepository>();
+builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
+builder.Services.AddScoped<IRentalsRepository, RentalsRepository>();
+
+// Services
+builder.Services.AddScoped<ICustomersService, CustomersService>();
+builder.Services.AddScoped<IRentalsService, RentalsService>();
 
 var app = builder.Build();
 

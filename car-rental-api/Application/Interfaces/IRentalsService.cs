@@ -1,7 +1,11 @@
-﻿namespace car_rental_api.Application.Interfaces
+﻿using car_rental_api.Application.Dtos;
+
+namespace car_rental_api.Application.Interfaces
 {
     public interface IRentalsService
-    {
-        Task<bool> IsCarAvailableAsync(int carId, DateTime startDate, DateTime endDate);
+    {       
+        Task<List<RentalDto>> GetAllAsync();
+        Task<RentalDto> GetByIdAsync(int id);
+        Task<RentalDto> AddAsync(RentalDto rentalDto);
     }
 }
