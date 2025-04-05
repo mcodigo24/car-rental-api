@@ -1,6 +1,5 @@
 ﻿using car_rental_api.Application.Dtos;
 using car_rental_api.Application.Interfaces;
-using car_rental_api.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace car_rental_api.Api.Controllers

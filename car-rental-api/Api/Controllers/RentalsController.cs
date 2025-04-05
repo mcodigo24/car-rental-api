@@ -1,7 +1,6 @@
 ﻿using car_rental_api.Application.Dtos;
 using car_rental_api.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace car_rental_api.Api.Controllers
 {
@@ -30,7 +29,7 @@ namespace car_rental_api.Api.Controllers
                 throw new KeyNotFoundException("No rentals found.");
 
             return Ok(rentals);
-        }        
+        }
 
         /// <summary>
         /// Retrieves a specific rental by its Id.
@@ -42,7 +41,7 @@ namespace car_rental_api.Api.Controllers
         {
             var rental = await _rentalService.GetByIdAsync(id);
             return Ok(rental);
-        }        
+        }
 
         /// <summary>
         /// Registers a new rental with the specified details.
@@ -66,7 +65,7 @@ namespace car_rental_api.Api.Controllers
         {
             await _rentalService.UpdateAsync(rentalDto);
             return NoContent();
-        }       
+        }
 
         /// <summary>
         /// Cancels an existing rental by updating its status.
