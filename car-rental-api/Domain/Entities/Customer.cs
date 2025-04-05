@@ -15,5 +15,7 @@ namespace car_rental_api.Domain.Entities
 
         [Required]
         public int IdNumber { get; set; }
+
+        public List<Rental> Rentals { get; set; }
     }
 }

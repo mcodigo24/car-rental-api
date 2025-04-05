@@ -14,5 +14,6 @@ namespace car_rental_api.Domain.Entities
         public string Model { get; set; }
 
         public List<Service> Services { get; set; }
+        public List<Rental> Rentals { get; set; }
     }
 }

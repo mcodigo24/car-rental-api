@@ -146,13 +146,13 @@ namespace car_rental_api.Migrations
             modelBuilder.Entity("car_rental_api.Domain.Entities.Rental", b =>
                 {
                     b.HasOne("car_rental_api.Domain.Entities.Car", "Car")
-                        .WithMany()
+                        .WithMany("Rentals")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("car_rental_api.Domain.Entities.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Rentals")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -183,7 +183,14 @@ namespace car_rental_api.Migrations
 
             modelBuilder.Entity("car_rental_api.Domain.Entities.Car", b =>
                 {
+                    b.Navigation("Rentals");
+
                     b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("car_rental_api.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Rentals");
                 });
 #pragma warning restore 612, 618
         }

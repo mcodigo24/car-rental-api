@@ -4,6 +4,8 @@ namespace car_rental_api.Application.Interfaces
 {
     public interface ICustomersService
     {
-        Task AddAsync(CustomerDto customerDto);
+        Task<CustomerDto?> AddIfNotExistsAsync(CustomerDto customerDto);
+        Task<CustomerDto> GetByFullNameAsync(string fullName);
+        Task UpdateAsync(CustomerDto customerDto);
     }
 }
