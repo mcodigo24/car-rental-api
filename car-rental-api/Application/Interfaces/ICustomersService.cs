@@ -6,5 +6,6 @@ namespace car_rental_api.Application.Interfaces
     {
         Task<CustomerDto?> AddIfNotExistsAsync(CustomerDto customerDto);
         Task<CustomerDto> GetByFullNameAsync(string fullName);
+        Task UpdateAsync(CustomerDto customerDto);
     }
 }

@@ -34,5 +34,12 @@ namespace car_rental_api.Application.Services
             var customer = await _customerRepository.GetByFullNameAsync(fullName) ?? throw new KeyNotFoundException("Customer not found.");
             return customer.ToDto();
         }
+
+        public async Task UpdateAsync(CustomerDto customerDto)
+        {
+            _ = await _customerRepository.GetByIdAsync(customerDto.Id) ?? throw new KeyNotFoundException("Customer not found.");            
+
+            await _customerRepository.UpdateAsync(customerDto.ToEntity(customerDto.Id));
+        }
     }
 }

@@ -34,14 +34,7 @@ namespace car_rental_api.Application.Services
 
         public async Task<RentalDto> AddAsync(RentalDto rentalDto)
         {
-            if (!await _carsRepository.ExistsByIdAsync(rentalDto.CarId))
-                throw new KeyNotFoundException("Car not found.");
-
-            if (!await _customersRepository.ExistsByIdAsync(rentalDto.CustomerId))
-                throw new KeyNotFoundException("Customer not found.");
-
-            if (!await IsCarAvailableAsync(rentalDto.CarId, rentalDto.StartDate, rentalDto.EndDate))
-                throw new ArgumentException("The car is not available for the selected dates.");
+            await ValidateRental(rentalDto);
 
             var rental = rentalDto.ToEntity();
             rental.RentalStatusId = (int)RentalStatusEnum.Confirmed;
@@ -49,6 +42,20 @@ namespace car_rental_api.Application.Services
             rentalDto.Id = rentalId;
 
             return rentalDto;
+        }
+
+        public async Task UpdateAsync(RentalDto rentalDto)
+        {
+            _ = await _rentalsRepository.GetByIdAsync(rentalDto.Id) ?? throw new KeyNotFoundException("Rental not found.");
+
+            await ValidateRental(rentalDto);
+
+            await _rentalsRepository.UpdateAsync(rentalDto.ToEntity(rentalDto.Id));
+        }
+
+        public async Task CancelAsync(int id)
+        {
+            await _rentalsRepository.CancelAsync(id);
         }
 
         #region Private methods
@@ -107,6 +114,18 @@ namespace car_rental_api.Application.Services
             }
 
             return hasMaintenanceConflict;
+        }
+
+        private async Task ValidateRental(RentalDto rentalDto)
+        {
+            if (!await _carsRepository.ExistsByIdAsync(rentalDto.CarId))
+                throw new KeyNotFoundException("Car not found.");
+
+            if (!await _customersRepository.ExistsByIdAsync(rentalDto.CustomerId))
+                throw new KeyNotFoundException("Customer not found.");
+
+            if (!await IsCarAvailableAsync(rentalDto.CarId, rentalDto.StartDate, rentalDto.EndDate))
+                throw new ArgumentException("The car is not available for the selected dates.");
         }
 
         #endregion

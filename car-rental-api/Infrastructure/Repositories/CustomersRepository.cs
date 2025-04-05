@@ -36,5 +36,16 @@ namespace car_rental_api.Infrastructure.Repositories
         {
             return await _context.Customers.FirstOrDefaultAsync(c => c.FullName.ToUpper() == fullName.ToUpper());
         }
+
+        public async Task<Customer?> GetByIdAsync(int id)
+        {
+            return await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task UpdateAsync(Customer customer)
+        {
+            _context.Customers.Update(customer);
+            await _context.SaveChangesAsync();
+        }
     }
 }
