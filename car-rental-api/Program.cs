@@ -29,6 +29,8 @@ builder.Services.AddScoped<IRentalsRepository, RentalsRepository>();
 // Services
 builder.Services.AddScoped<ICustomersService, CustomersService>();
 builder.Services.AddScoped<IRentalsService, RentalsService>();
+builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
+builder.Services.AddScoped<ICarsService, CarsService>();
 
 var app = builder.Build();
 

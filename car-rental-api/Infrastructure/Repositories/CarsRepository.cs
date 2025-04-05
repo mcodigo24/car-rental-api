@@ -27,5 +27,13 @@ namespace car_rental_api.Infrastructure.Repositories
         {
             return await _context.Cars.AnyAsync(c => c.Id == carId);
         }
+
+        public async Task<List<Car>> GetAllWithRentalsAndServicesAsync()
+        {
+            return await _context.Cars
+                .Include(c => c.Rentals.Where(r => r.RentalStatusId == (int)RentalStatusEnum.Confirmed))
+                .Include(c => c.Services)
+                .ToListAsync();
+        }
     }
 }

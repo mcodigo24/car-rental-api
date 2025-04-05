@@ -6,5 +6,6 @@ namespace car_rental_api.Domain.Repositories
     {
         Task<Car?> GetCarWithRentalsAndServicesAsync(int carId);
         Task<bool> ExistsByIdAsync(int carId);
+        Task<List<Car>> GetAllWithRentalsAndServicesAsync();
     }
 }
