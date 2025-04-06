@@ -10,11 +10,13 @@ namespace car_rental_api.Application.Services
     {
         private readonly ICarsRepository _carsRepository;
         private readonly IAvailabilityService _availabilityService;
+        private readonly IRentalsRepository _rentalsRepository;
 
-        public CarsService(ICarsRepository carsRepository, IAvailabilityService availabilityService)
+        public CarsService(ICarsRepository carsRepository, IAvailabilityService availabilityService, IRentalsRepository rentalsRepository)
         {
             _carsRepository = carsRepository;
             _availabilityService = availabilityService;
+            _rentalsRepository = rentalsRepository;
         }
 
         public async Task<List<CarDto>> GetAvailableCarsAsync(DateTime startDate, DateTime endDate, string? filter)
@@ -39,6 +41,12 @@ namespace car_rental_api.Application.Services
             }
 
             return [.. availableCars.Select(c => c.ToDto())];
+        }
+
+        public async Task<MostRentedDto> GetMostRentedTypeAsync()
+        {
+            var mostRented = await _rentalsRepository.GetMostRentedCarTypeAsync() ?? throw new KeyNotFoundException("No rentals found.");
+            return mostRented;
         }
     }
 }

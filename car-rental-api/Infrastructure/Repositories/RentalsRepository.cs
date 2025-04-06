@@ -1,4 +1,5 @@
-﻿using car_rental_api.Domain.Entities;
+﻿using car_rental_api.Application.Dtos;
+using car_rental_api.Domain.Entities;
 using car_rental_api.Domain.Enums;
 using car_rental_api.Domain.Repositories;
 using car_rental_api.Infrastructure.Persistence.Database;
@@ -49,6 +50,20 @@ namespace car_rental_api.Infrastructure.Repositories
                                  .Include(c => c.Customer)
                                  .Include(c => c.Car)
                                  .Where(r => r.RentalStatusId == (int)RentalStatusEnum.Confirmed).ToListAsync();
+        }
+
+        public async Task<MostRentedDto?> GetMostRentedCarTypeAsync()
+        {
+            return await _context.Rentals
+                .Include(c => c.Car)
+                .GroupBy(r => r.Car.Type)
+                .Select(s => new MostRentedDto
+                {
+                    Type = s.Key,
+                    Count = s.Count()
+                })
+                .OrderByDescending(o => o.Count)
+                .FirstOrDefaultAsync();
         }
 
         #region Private methods

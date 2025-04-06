@@ -35,5 +35,16 @@ namespace car_rental_api.Api.Controllers
 
             return Ok(cars);
         }
+
+        /// <summary>
+        /// Retrieves the most rented car type from the system.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("most-rented-type")]
+        public async Task<ActionResult<MostRentedDto>> GetMostRentedType()
+        {
+            var mostRented = await _carsService.GetMostRentedTypeAsync();
+            return Ok(mostRented);
+        }
     }
 }
