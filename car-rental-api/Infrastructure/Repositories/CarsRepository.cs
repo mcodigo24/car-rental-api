@@ -1,11 +1,12 @@
-﻿using car_rental_api.Domain.Entities;
+﻿using car_rental_api.Application.Dtos;
+using car_rental_api.Domain.Entities;
 using car_rental_api.Domain.Enums;
 using car_rental_api.Domain.Repositories;
 using car_rental_api.Infrastructure.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace car_rental_api.Infrastructure.Repositories
-{   
+{
     public class CarsRepository : ICarsRepository
     {
         private readonly ApplicationDbContext _context;
@@ -18,7 +19,7 @@ namespace car_rental_api.Infrastructure.Repositories
         public async Task<Car?> GetCarWithRentalsAndServicesAsync(int carId)
         {
             return await _context.Cars
-                .Include(c => c.Rentals.Where(r => r.RentalStatusId == (int)RentalStatusEnum.Confirmed)) 
+                .Include(c => c.Rentals.Where(r => r.RentalStatusId == (int)RentalStatusEnum.Confirmed))
                 .Include(c => c.Services)
                 .FirstOrDefaultAsync(c => c.Id == carId);
         }
@@ -34,6 +35,6 @@ namespace car_rental_api.Infrastructure.Repositories
                 .Include(c => c.Rentals.Where(r => r.RentalStatusId == (int)RentalStatusEnum.Confirmed))
                 .Include(c => c.Services)
                 .ToListAsync();
-        }
+        }        
     }
 }

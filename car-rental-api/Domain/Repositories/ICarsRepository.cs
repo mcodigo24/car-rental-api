@@ -1,4 +1,5 @@
-﻿using car_rental_api.Domain.Entities;
+﻿using car_rental_api.Application.Dtos;
+using car_rental_api.Domain.Entities;
 
 namespace car_rental_api.Domain.Repositories
 {

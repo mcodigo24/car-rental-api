@@ -1,4 +1,5 @@
-﻿using car_rental_api.Domain.Entities;
+﻿using car_rental_api.Application.Dtos;
+using car_rental_api.Domain.Entities;
 
 namespace car_rental_api.Domain.Repositories
 {
@@ -9,5 +10,6 @@ namespace car_rental_api.Domain.Repositories
         Task UpdateAsync(Rental rental);
         Task CancelAsync(int rentalId);
         Task<List<Rental>> GetAllAsync();
+        Task<MostRentedDto?> GetMostRentedCarTypeAsync();
     }
 }
