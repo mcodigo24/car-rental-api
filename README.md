@@ -11,10 +11,25 @@ This is the API for the car rental system, built with .NET 8 and using SQL Serve
 ## Getting Started
 
 1. Clone the repository.
-2. Copy the settings file: cp appsettings.example.json appsettings.json
+2. Copy the settings file: 
+
+```bash
+cp appsettings.example.json appsettings.json
+```
+
 3. Edit the new `appsettings.json` file and replace the connection string with your own SQL Server configuration.
-4. Apply the database migrations: update-database
-5. Run the API: dotnet run
+4. Apply the database migrations: 
+
+```bash
+update-database
+```
+
+5. Run the API: 
+
+```bash
+dotnet run
+```
+
 6. Once the server is running, you can test all available endpoints using Swagger at: https://localhost:44329/swagger
 
 ## Notes
