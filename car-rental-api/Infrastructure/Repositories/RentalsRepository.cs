@@ -56,6 +56,7 @@ namespace car_rental_api.Infrastructure.Repositories
         {
             return await _context.Rentals
                 .Include(c => c.Car)
+                .Where(r => r.RentalStatusId == (int)RentalStatusEnum.Confirmed)
                 .GroupBy(r => r.Car.Type)
                 .Select(s => new MostRentedDto
                 {

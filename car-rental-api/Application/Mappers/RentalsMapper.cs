@@ -16,12 +16,7 @@ namespace car_rental_api.Application.Mappers
                 CustomerId = rental.CustomerId
             };
         }
-
-        public static List<RentalDto> ToListDto(this List<Rental> list)
-        {
-            return [.. list.Select(r => r.ToDto())];
-        }
-
+        
         public static Rental ToEntity(this RentalDto dto)
         {
             return new()
@@ -32,13 +27,33 @@ namespace car_rental_api.Application.Mappers
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate
             };
+        }        
+
+        public static RentalResponseDto ToResponseDto(this Rental rental)
+        {
+            return new()
+            {
+                Id = rental.Id,
+                StartDate = rental.StartDate,
+                EndDate = rental.EndDate,
+                Car = rental.Car.ToDto(),
+                Customer = rental.Customer.ToDto()
+            };
         }
 
-        public static Rental ToEntity(this RentalDto dto, int id)
+        public static List<RentalResponseDto> ToListResponseDto(this List<Rental> list)
         {
-            var rental = dto.ToEntity();
-            rental.Id = id;
-            return rental;
+            return [.. list.Select(r => r.ToResponseDto())];
+        }
+
+        public static Rental ToUpdateEntity(this Rental entity, RentalDto dto)
+        {
+            entity.Id = dto.Id;
+            entity.StartDate = dto.StartDate;
+            entity.EndDate = dto.EndDate;
+            entity.CarId = dto.CarId;
+            entity.CustomerId = dto.CustomerId;
+            return entity;
         }
     }
 }

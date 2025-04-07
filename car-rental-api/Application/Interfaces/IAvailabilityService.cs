@@ -2,6 +2,6 @@
 {
     public interface IAvailabilityService
     {
-        Task<bool> IsCarAvailableAsync(int carId, DateTime startDate, DateTime endDate);
+        Task<bool> IsCarAvailableAsync(int carId, DateTime startDate, DateTime endDate, int? rentalId = null);
     }
 }

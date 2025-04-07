@@ -11,7 +11,8 @@ namespace car_rental_api.Application.Mappers
             {
                 Id = entity.Id,
                 FullName = entity.FullName,
-                Address = entity.Address
+                Address = entity.Address,
+                PersonId = entity.PersonId
             };
         }
 
@@ -20,15 +21,18 @@ namespace car_rental_api.Application.Mappers
             return new()
             {                
                 FullName = dto.FullName,
-                Address = dto.Address
+                Address = dto.Address,
+                PersonId = dto.PersonId
             };
-        }
+        }        
 
-        public static Customer ToEntity(this CustomerDto dto, int id)
+        public static Customer ToUpdateEntity(this Customer entity, CustomerDto dto)
         {
-            var customer = dto.ToEntity();
-            customer.Id = id;
-            return customer;
+            entity.Id = dto.Id;
+            entity.FullName = dto.FullName; 
+            entity.Address = dto.Address;
+            entity.PersonId = dto.PersonId;
+            return entity;
         }
     }
 }

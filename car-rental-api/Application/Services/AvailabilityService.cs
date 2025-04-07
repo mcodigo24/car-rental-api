@@ -13,15 +13,20 @@ namespace car_rental_api.Application.Services
             _carsRepository = carsRepository;
         }
 
-        public async Task<bool> IsCarAvailableAsync(int carId, DateTime startDate, DateTime endDate)
+        public async Task<bool> IsCarAvailableAsync(int carId, DateTime startDate, DateTime endDate, int? rentalId = null)
         {
             var car = await _carsRepository.GetCarWithRentalsAndServicesAsync(carId);
 
             if (car == null) return false;
 
-            if (IsRented(car, startDate, endDate)) return false;
+            var rentals = car.Rentals;
 
-            if (HasRecentRental(car, startDate)) return false;
+            if (rentalId != null)
+                rentals = [.. rentals.Where(r => r.Id != rentalId)];
+
+            if (IsRented(rentals, startDate, endDate)) return false;
+
+            if (HasRecentRental(rentals, startDate)) return false;
 
             if (HasMaintenanceConflict(car, startDate, endDate)) return false;
 
@@ -30,18 +35,18 @@ namespace car_rental_api.Application.Services
 
         #region Private methods
 
-        private static bool IsRented(Car car, DateTime startDate, DateTime endDate)
+        private static bool IsRented(List<Rental> rentals, DateTime startDate, DateTime endDate)
         {
-            return car.Rentals.Any(rental =>
+            return rentals.Any(rental =>
                  (startDate >= rental.StartDate && startDate <= rental.EndDate) ||
                  (endDate >= rental.StartDate && endDate <= rental.EndDate) ||
                  (startDate <= rental.StartDate && endDate >= rental.EndDate)
             );
         }
 
-        private static bool HasRecentRental(Car car, DateTime startDate)
+        private static bool HasRecentRental(List<Rental> rentals, DateTime startDate)
         {
-            return car.Rentals.Any(rental => rental.EndDate.AddDays(1) == startDate);
+            return rentals.Any(rental => rental.EndDate.AddDays(1) == startDate);
         }
 
         private static bool HasMaintenanceConflict(Car car, DateTime startDate, DateTime endDate)
