@@ -2,7 +2,6 @@
 using car_rental_api.Application.Interfaces;
 using car_rental_api.Application.Mappers;
 using car_rental_api.Domain.Repositories;
-using car_rental_api.Infrastructure.Repositories;
 
 namespace car_rental_api.Application.Services
 {
@@ -37,9 +36,9 @@ namespace car_rental_api.Application.Services
 
         public async Task UpdateAsync(CustomerDto customerDto)
         {
-            _ = await _customerRepository.GetByIdAsync(customerDto.Id) ?? throw new KeyNotFoundException("Customer not found.");            
+            var customer = await _customerRepository.GetByIdAsync(customerDto.Id) ?? throw new KeyNotFoundException("Customer not found.");                   
 
-            await _customerRepository.UpdateAsync(customerDto.ToEntity(customerDto.Id));
+            await _customerRepository.UpdateAsync(customer.ToUpdateEntity(customerDto));
         }
     }
 }

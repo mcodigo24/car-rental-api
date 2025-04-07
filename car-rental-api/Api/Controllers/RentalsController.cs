@@ -21,7 +21,7 @@ namespace car_rental_api.Api.Controllers
         /// <returns>A list of rental records.</returns>
         /// <exception cref="KeyNotFoundException"></exception>
         [HttpGet]
-        public async Task<ActionResult<List<RentalDto>>> GetRentals()
+        public async Task<ActionResult<List<RentalResponseDto>>> GetRentals()
         {
             var rentals = await _rentalService.GetAllAsync();
 
